@@ -1,0 +1,25 @@
+.header {
+  display: flex;
+  padding: 10px 40px;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #333333;
+}
+
+.favorites-button {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.main {
+  padding: 10px 40px;
+}
+
+.product-id-cell {
+  display: flex;
+
+  & > div {
+    margin-left: 6px;
+  }
+}

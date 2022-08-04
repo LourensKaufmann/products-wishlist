@@ -30,8 +30,8 @@ export const useAddProductFavorite = () => {
 
 export const useRemoveProductFavorite = () => {
     const { isLoading, mutateAsync, error } = useMutation(
-        (productId: number) =>
-            removeProductFavorite(productId)
+        (productId: number, fullyRemove: boolean = false) =>
+            removeProductFavorite(productId, fullyRemove)
     );
 
     return {

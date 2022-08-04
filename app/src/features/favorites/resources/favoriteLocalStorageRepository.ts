@@ -8,26 +8,47 @@ const getProductFavorites = async (): Promise<ProductFavorite[]> => {
   return data;
 };
 
+// TODO: Test this
 const addProductFavorite = async (productId: number): Promise<void> => {
   const productFavorites = await getProductFavorites();
-  if (!productFavorites.some((pf) => pf.productId === productId)) {
-    productFavorites.push({ productId });
-    window.localStorage.setItem(
-      productFavoritesLocalStorageKey,
-      JSON.stringify(productFavorites)
-    );
+  const existingProductFavorite = productFavorites.find(
+    (pf) => pf.productId === productId
+  );
+
+  if (existingProductFavorite) {
+    existingProductFavorite.quantity += 1;
+  } else {
+    productFavorites.push({ productId, quantity: 1 });
   }
+
+  window.localStorage.setItem(
+    productFavoritesLocalStorageKey,
+    JSON.stringify(productFavorites)
+  );
 };
 
-const removeProductFavorite = async (productId: number): Promise<void> => {
+// TODO: Test this
+const removeProductFavorite = async (productId: number, fullyRemove: boolean): Promise<void> => {
   const productFavorites = await getProductFavorites();
-  if (productFavorites.some((pf) => pf.productId === productId)) {
-    window.localStorage.setItem(
-      productFavoritesLocalStorageKey,
-      JSON.stringify(
-        productFavorites.filter((pf) => pf.productId !== productId)
-      )
-    );
+  const existingProductFavorite = productFavorites.find(
+    (pf) => pf.productId === productId
+  );
+
+  if (existingProductFavorite) {
+    if (existingProductFavorite.quantity === 1 || fullyRemove) {
+      window.localStorage.setItem(
+        productFavoritesLocalStorageKey,
+        JSON.stringify(
+          productFavorites.filter((pf) => pf.productId !== productId)
+        )
+      );
+    } else {
+      existingProductFavorite.quantity -= 1;
+      window.localStorage.setItem(
+        productFavoritesLocalStorageKey,
+        JSON.stringify(productFavorites)
+      );
+    }
   }
 };
 

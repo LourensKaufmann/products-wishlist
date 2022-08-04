@@ -2,27 +2,25 @@ import React from "react";
 import "./styles.scss";
 import Favorites from "./features/favorites/Favorites";
 import Products from "./features/products/Products";
-import Sidebar from "./components/Sidebar";
-import { useProducts } from "./features/products/resources/productQueries";
-import {
-  useProductFavorites,
-} from "./features/favorites/resources/favoriteQueries";
+import { AcademicCapIcon } from "@heroicons/react/outline";
+import { StarIcon } from "@heroicons/react/solid";
 
 function App() {
-  const { products, isFetchingProducts } = useProducts();
-  const {
-    productFavorites,
-    isFetchingProductFavorites,
-  } = useProductFavorites();
-
-  const isFetching = isFetchingProducts || isFetchingProductFavorites;
-
   return (
     <div className="app">
-      <Sidebar />
+      <div className="header">
+        <AcademicCapIcon color="white" width={48} />
+        <StarIcon className="favorites-button" color="white" width={40} />
+      </div>
       <div className="main">
-        <Products products={products} productFavorites={productFavorites} />
-        <Favorites products={products} productFavorites={productFavorites} />
+        <div>
+          Products
+          <Products />
+        </div>
+        <div>
+          Favorites
+          <Favorites />
+        </div>
       </div>
     </div>
   );
